@@ -27,7 +27,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
         }
 
         /* Ice cream decorations */
@@ -48,11 +48,13 @@
             max-width: 600px;
             width: 100%;
             background: white;
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 25px;
+            padding: 30px 20px;
             box-shadow: 0 30px 80px rgba(30, 60, 114, 0.4);
             position: relative;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .gallery-card.transitioning {
@@ -136,10 +138,10 @@
         /* Progress bar */
         .progress-container {
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: #e8eef7;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
@@ -153,11 +155,11 @@
         /* Year badge */
         .year-badge {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .year-badge span {
-            font-size: 3rem;
+            font-size: clamp(1.8rem, 7vw, 3rem);
             font-weight: 900;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             -webkit-background-clip: text;
@@ -168,10 +170,10 @@
         /* Photo frame */
         .photo-frame {
             width: 100%;
-            height: 320px;
-            border-radius: 20px;
+            height: 250px;
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
             position: relative;
             background: linear-gradient(135deg, #e8eef7, #d4dce9);
@@ -194,39 +196,40 @@
         }
 
         .photo-description {
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2.5vw, 0.95rem);
             font-weight: 600;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         /* Title */
         .photo-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.1rem, 4.5vw, 1.8rem);
             font-weight: 700;
             color: #1e3c72;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+            line-height: 1.3;
         }
 
         /* Counter */
         .counter {
             text-align: center;
             color: #5b7eb8;
-            margin-bottom: 25px;
-            font-size: 1rem;
+            margin-bottom: 20px;
+            font-size: clamp(0.85rem, 2.8vw, 1rem);
             font-weight: 600;
         }
 
         /* Next button */
         .next-button {
             width: 100%;
-            padding: 18px;
-            font-size: 1.3rem;
+            padding: 14px;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
             font-weight: 700;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #5b7eb8 100%);
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 10px 25px rgba(30, 60, 114, 0.4);
             transition: all 0.3s ease;
@@ -239,143 +242,137 @@
         }
 
         .next-button:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
-        /* Final message screen */
+        /* Final Screen */
         .final-screen {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 40%, #5b7eb8 70%, #87CEEB 100%);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            z-index: 1000;
             overflow: hidden;
         }
 
         .final-screen.active {
-            display: flex;
+            display: block;
         }
 
-        /* Fireworks */
+        #fireworksContainer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         .firework {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            animation: explode 2s ease-out infinite;
+            opacity: 0;
+            animation: explode 2s ease-out forwards;
         }
 
         @keyframes explode {
             0% {
-                transform: translate(0, 0) scale(0);
                 opacity: 1;
+                transform: translate(0, 0) scale(1);
             }
             100% {
                 opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
             }
         }
 
-        /* Ice cream explosion */
         .ice-cream-particle {
             position: absolute;
-            font-size: 30px;
-            animation: iceCreamExplode 2s ease-out infinite;
+            font-size: 2rem;
+            opacity: 0;
+            animation: particleFloat 3s ease-out forwards;
         }
 
-        @keyframes iceCreamExplode {
+        @keyframes particleFloat {
             0% {
+                opacity: 1;
                 transform: translate(0, 0) scale(0) rotate(0deg);
+            }
+            50% {
                 opacity: 1;
             }
             100% {
                 opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(720deg);
             }
         }
 
-        /* Message styling */
+        /* Message container */
         .message-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            animation: messageAppear 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        @keyframes messageAppear {
-            0% {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            70% {
-                transform: scale(1.1) rotate(10deg);
-            }
-            100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
         }
 
         .year-2026 {
-            font-size: clamp(4rem, 12vw, 10rem);
+            font-size: clamp(2.5rem, 10vw, 8rem);
             font-weight: 900;
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FF69B4);
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF69B4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 20px;
-            line-height: 1;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            0% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
-            100% { filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8)); }
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease-in;
         }
 
         .message-text {
-            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-size: clamp(1.2rem, 4.5vw, 2.5rem);
             color: white;
             font-weight: 700;
+            margin-bottom: 20px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-            animation: slideUp 1s ease-out 0.3s backwards;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            animation: fadeIn 1.5s ease-in;
         }
 
         .message-main {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #FF1493, #FF69B4, #FFB5E8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-top: 20px;
-            animation: slideUp 1s ease-out 0.6s backwards, wiggle 1s ease-in-out infinite 1.5s;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(2deg); }
-            75% { transform: rotate(-2deg); }
+            font-size: clamp(1rem, 3.5vw, 2rem);
+            color: white;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 2s ease-in;
         }
 
         .emoji-container {
-            margin-top: 40px;
-            font-size: clamp(3rem, 8vw, 5rem);
-            animation: fadeIn 1s ease-out 1s backwards;
+            font-size: clamp(1.8rem, 7vw, 4rem);
+            margin-bottom: 15px;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        .final-screen a {
+            margin-top: 30px;
+            color: white;
+            font-size: clamp(0.9rem, 2.8vw, 1.1rem);
+            text-decoration: none;
+            padding: 11px 25px;
+            border: 2px solid white;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .final-screen a:hover {
+            background: white;
+            color: #1e3c72;
         }
 
         @keyframes fadeIn {
@@ -385,18 +382,244 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
             .gallery-card {
-                padding: 30px 20px;
+                padding: 20px 15px;
+                border-radius: 20px;
+                max-height: 95vh;
             }
             
             .photo-frame {
-                height: 250px;
+                height: 200px;
+                border-radius: 12px;
+                margin-bottom: 15px;
             }
             
             .card-ice-cream {
-                top: -50px;
-                right: 20px;
-                transform: scale(0.8);
+                top: -40px;
+                right: 15px;
+                transform: scale(0.65);
+            }
+
+            .ice-cream-scoop {
+                width: 50px;
+                height: 50px;
+            }
+
+            .scoop-shine {
+                width: 14px;
+                height: 14px;
+                top: 11px;
+                left: 15px;
+            }
+
+            .scoop-blue, .scoop-mint {
+                margin-top: -14px;
+            }
+
+            .ice-cream-cone {
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                border-top: 65px solid #E6BC87;
+                margin-top: -10px;
+            }
+
+            .cone-pattern {
+                height: 65px;
+                left: -25px;
+                top: -65px;
+            }
+
+            .next-button {
+                padding: 13px;
+                border-radius: 10px;
+            }
+
+            .ice-cream-bg {
+                font-size: 35px;
+            }
+
+            .progress-container {
+                margin-bottom: 15px;
+                height: 5px;
+            }
+
+            .year-badge {
+                margin-bottom: 12px;
+            }
+
+            .photo-title {
+                margin-bottom: 12px;
+            }
+
+            .counter {
+                margin-bottom: 15px;
+            }
+
+            .message-container {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+
+            .gallery-card {
+                padding: 18px 12px;
+                border-radius: 18px;
+            }
+
+            .photo-frame {
+                height: 180px;
+                margin-bottom: 12px;
+                border-radius: 10px;
+            }
+
+            .card-ice-cream {
+                top: -35px;
+                right: 12px;
+                transform: scale(0.55);
+            }
+
+            .progress-container {
+                height: 4px;
+                margin-bottom: 12px;
+            }
+
+            .year-badge {
+                margin-bottom: 10px;
+            }
+
+            .photo-title {
+                margin-bottom: 10px;
+            }
+
+            .counter {
+                margin-bottom: 12px;
+            }
+
+            .next-button {
+                padding: 12px;
+                border-radius: 8px;
+            }
+
+            .photo-overlay {
+                padding: 25px 12px 12px;
+            }
+
+            .ice-cream-bg {
+                font-size: 28px;
+            }
+
+            .ice-cream-particle {
+                font-size: 1.3rem;
+            }
+
+            .message-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .final-screen a {
+                padding: 10px 22px;
+                margin-top: 25px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .gallery-card {
+                padding: 15px 10px;
+            }
+
+            .photo-frame {
+                height: 160px;
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+
+            .card-ice-cream {
+                top: -32px;
+                right: 8px;
+                transform: scale(0.45);
+            }
+
+            .next-button {
+                padding: 11px;
+            }
+
+            .progress-container {
+                margin-bottom: 10px;
+            }
+
+            .year-badge {
+                margin-bottom: 8px;
+            }
+
+            .photo-title {
+                margin-bottom: 8px;
+            }
+
+            .counter {
+                margin-bottom: 10px;
+            }
+
+            .photo-overlay {
+                padding: 20px 10px 10px;
+            }
+
+            .ice-cream-bg {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-height: 700px) and (max-width: 768px) {
+            .photo-frame {
+                height: 160px;
+            }
+
+            .gallery-card {
+                padding: 15px 12px;
+            }
+
+            .card-ice-cream {
+                transform: scale(0.5);
+                top: -35px;
+            }
+
+            .progress-container {
+                margin-bottom: 10px;
+            }
+
+            .year-badge {
+                margin-bottom: 8px;
+            }
+
+            .photo-title {
+                margin-bottom: 8px;
+            }
+
+            .counter {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-height: 650px) and (max-width: 768px) {
+            .photo-frame {
+                height: 140px;
+            }
+
+            .gallery-card {
+                padding: 12px 10px;
+            }
+
+            .card-ice-cream {
+                transform: scale(0.4);
+                top: -30px;
             }
         }
     </style>
@@ -456,7 +679,7 @@
             <h2 class="photo-title" id="photoTitle">2025'te Birlikte</h2>
 
             <!-- Counter -->
-            <div class="counter" id="counter">1 / 5</div>
+            <div class="counter" id="counter">1 / 4</div>
 
             <!-- Next button -->
             <button class="next-button" id="nextButton" onclick="nextPhoto()">
@@ -473,7 +696,7 @@
             <div class="message-text">Yeni Yılın Kutlu Olsunnnn</div>
             <div class="message-main">Karpuzlu Dondurmaaaa 💕</div>
             <div class="emoji-container">🍦🎊</div>
-            <a href="https://open.spotify.com/intl-tr/track/0q6LuUqGLUiCPP1cbdwFs3?si=ffc19110e0244def" style="margin-top: 60px; color: white; font-size: 1.1rem; text-decoration: none; padding: 12px 30px; border: 2px solid white; border-radius: 25px; transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='#1e3c72';" onmouseout="this.style.background='transparent'; this.style.color='white';">
+            <a href="https://open.spotify.com/intl-tr/track/0q6LuUqGLUiCPP1cbdwFs3?si=ffc19110e0244def">
                 dinle...
             </a>
         </div>

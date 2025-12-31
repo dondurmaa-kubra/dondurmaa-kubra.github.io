@@ -30,6 +30,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 15px;
         }
 
         /* Floating ice cream decorations */
@@ -73,18 +74,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 20px;
             animation: bounce 2s ease-in-out infinite;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
         .ice-cream-scoop {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             position: relative;
             box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset -5px -5px 15px rgba(0,0,0,0.1);
@@ -97,34 +98,34 @@
 
         .scoop-blue {
             background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%);
-            margin-top: -30px;
+            margin-top: -20px;
             z-index: 2;
         }
 
         .scoop-mint {
             background: linear-gradient(135deg, #98FF98 0%, #90EE90 100%);
-            margin-top: -30px;
+            margin-top: -20px;
             z-index: 1;
         }
 
         .scoop-shine {
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
-            top: 25px;
-            left: 30px;
+            top: 18px;
+            left: 22px;
             filter: blur(4px);
         }
 
         .ice-cream-cone {
             width: 0;
             height: 0;
-            border-left: 60px solid transparent;
-            border-right: 60px solid transparent;
-            border-top: 150px solid #E6BC87;
-            margin-top: -25px;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-top: 100px solid #E6BC87;
+            margin-top: -18px;
             position: relative;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
         }
@@ -132,7 +133,7 @@
         .cone-pattern {
             position: absolute;
             width: 2px;
-            height: 150px;
+            height: 100px;
             background: #C8975F;
             opacity: 0.4;
         }
@@ -141,13 +142,15 @@
         .countdown-container {
             text-align: center;
             z-index: 10;
+            width: 100%;
+            max-width: 800px;
         }
 
         .countdown-title {
-            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 700;
             color: white;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
             animation: pulse 2s ease-in-out infinite;
         }
@@ -159,18 +162,21 @@
 
         .countdown {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
+            padding: 0 10px;
         }
 
         .countdown-item {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 30px 25px;
-            min-width: 120px;
+            border-radius: 15px;
+            padding: 15px 12px;
+            min-width: 70px;
+            flex: 1;
+            max-width: 120px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
@@ -181,7 +187,7 @@
         }
 
         .countdown-number {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: clamp(2rem, 6vw, 5rem);
             font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFA500, #FF69B4);
             -webkit-background-clip: text;
@@ -192,20 +198,21 @@
         }
 
         .countdown-label {
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-size: clamp(0.7rem, 2vw, 1.2rem);
             color: white;
-            margin-top: 10px;
+            margin-top: 6px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .message {
-            margin-top: 40px;
-            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-top: 25px;
+            font-size: clamp(0.9rem, 3vw, 1.5rem);
             color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            padding: 0 20px;
         }
 
         /* Loading animation */
@@ -220,7 +227,7 @@
         }
 
         .loading-text {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.5rem, 5vw, 2rem);
             color: white;
             font-weight: 700;
             margin-bottom: 20px;
@@ -228,8 +235,8 @@
         }
 
         .loading-bar {
-            width: 300px;
-            max-width: 80%;
+            width: 90%;
+            max-width: 300px;
             height: 8px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
@@ -251,24 +258,173 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
             .ice-cream-scoop {
-                width: 90px;
-                height: 90px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .scoop-shine {
+                width: 18px;
+                height: 18px;
+                top: 14px;
+                left: 18px;
+            }
+
+            .scoop-blue {
+                margin-top: -15px;
+            }
+
+            .scoop-mint {
+                margin-top: -15px;
             }
 
             .ice-cream-cone {
-                border-left: 45px solid transparent;
-                border-right: 45px solid transparent;
-                border-top: 120px solid #E6BC87;
+                border-left: 30px solid transparent;
+                border-right: 30px solid transparent;
+                border-top: 75px solid #E6BC87;
+                margin-top: -12px;
+            }
+
+            .cone-pattern {
+                height: 75px;
             }
 
             .countdown {
-                gap: 15px;
+                gap: 8px;
             }
 
             .countdown-item {
-                padding: 20px 15px;
-                min-width: 90px;
+                padding: 12px 8px;
+                min-width: 60px;
+                border-radius: 12px;
+            }
+
+            .countdown-title {
+                margin-bottom: 15px;
+            }
+
+            .message {
+                margin-top: 20px;
+            }
+
+            .ice-cream-float {
+                font-size: 30px;
+            }
+
+            .main-ice-cream {
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
+
+            .ice-cream-scoop {
+                width: 50px;
+                height: 50px;
+            }
+
+            .scoop-shine {
+                width: 15px;
+                height: 15px;
+                top: 12px;
+                left: 15px;
+            }
+
+            .scoop-blue, .scoop-mint {
+                margin-top: -12px;
+            }
+
+            .ice-cream-cone {
+                border-left: 25px solid transparent;
+                border-right: 25px solid transparent;
+                border-top: 60px solid #E6BC87;
+                margin-top: -10px;
+            }
+
+            .cone-pattern {
+                height: 60px;
+                width: 1.5px;
+            }
+
+            .countdown {
+                gap: 6px;
+            }
+
+            .countdown-item {
+                padding: 10px 6px;
+                min-width: 55px;
+                border-radius: 10px;
+            }
+
+            .countdown-title {
+                margin-bottom: 12px;
+            }
+
+            .message {
+                margin-top: 15px;
+                padding: 0 10px;
+            }
+
+            .ice-cream-float {
+                font-size: 25px;
+            }
+
+            .main-ice-cream {
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .ice-cream-scoop {
+                width: 45px;
+                height: 45px;
+            }
+
+            .scoop-shine {
+                width: 12px;
+                height: 12px;
+                top: 10px;
+                left: 13px;
+            }
+
+            .scoop-blue, .scoop-mint {
+                margin-top: -10px;
+            }
+
+            .ice-cream-cone {
+                border-left: 22px solid transparent;
+                border-right: 22px solid transparent;
+                border-top: 55px solid #E6BC87;
+                margin-top: -8px;
+            }
+
+            .cone-pattern {
+                height: 55px;
+                width: 1px;
+            }
+
+            .countdown-item {
+                min-width: 50px;
+                padding: 8px 5px;
+            }
+
+            .countdown {
+                gap: 5px;
+            }
+
+            .message {
+                padding: 0 8px;
+            }
+
+            .ice-cream-float {
+                font-size: 20px;
             }
         }
     </style>
@@ -336,7 +492,7 @@
 
         <!-- Loading screen -->
         <div class="loading" id="loading">
-            <div class="loading-text">🎊 2026 Yükleniye! 🎊</div>
+            <div class="loading-text">🎊 2026 Yükleniyor! 🎊</div>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
@@ -378,15 +534,6 @@
         // Her saniye güncelle
         updateCountdown();
         setInterval(updateCountdown, 1000);
-
-        // Test için: Sayfa yüklendiğinde 5 saniye sonra otomatik yönlendir (kaldırabilirsin)
-        // setTimeout(() => {
-        //     document.getElementById('countdownContainer').style.display = 'none';
-        //     document.getElementById('loading').classList.add('active');
-        //     setTimeout(() => {
-        //         window.location.href = 'galeri.html';
-        //     }, 2000);
-        // }, 5000);
     </script>
 </body>
 </html>
