@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026'ya Geri Sayım 🍦</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Comic Sans MS', cursive;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%) !important;
+        }
+
+        .container {
+            background-color: #1e3c72;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Floating ice cream decorations */
+        .ice-cream-float {
+            position: absolute;
+            font-size: 50px;
+            opacity: 0.15;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        /* Stars background */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 20% 30%, white, transparent),
+                radial-gradient(2px 2px at 60% 70%, white, transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(1px 1px at 80% 10%, white, transparent),
+                radial-gradient(2px 2px at 90% 60%, white, transparent),
+                radial-gradient(1px 1px at 33% 80%, white, transparent),
+                radial-gradient(2px 2px at 15% 90%, white, transparent);
+            background-size: 200% 200%;
+            animation: twinkle 3s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Main ice cream */
+        .main-ice-cream {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .ice-cream-scoop {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3), inset -5px -5px 15px rgba(0,0,0,0.1);
+        }
+
+        .scoop-pink {
+            background: linear-gradient(135deg, #FFB5E8 0%, #FF9CEE 100%);
+            z-index: 3;
+        }
+
+        .scoop-blue {
+            background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%);
+            margin-top: -30px;
+            z-index: 2;
+        }
+
+        .scoop-mint {
+            background: linear-gradient(135deg, #98FF98 0%, #90EE90 100%);
+            margin-top: -30px;
+            z-index: 1;
+        }
+
+        .scoop-shine {
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            top: 25px;
+            left: 30px;
+            filter: blur(4px);
+        }
+
+        .ice-cream-cone {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-top: 150px solid #E6BC87;
+            margin-top: -25px;
+            position: relative;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .cone-pattern {
+            position: absolute;
+            width: 2px;
+            height: 150px;
+            background: #C8975F;
+            opacity: 0.4;
+        }
+
+        /* Countdown container */
+        .countdown-container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .countdown-title {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px 25px;
+            min-width: 120px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .countdown-number {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FF69B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .countdown-label {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: white;
+            margin-top: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .message {
+            margin-top: 40px;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-text {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .loading-bar {
+            width: 300px;
+            max-width: 80%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FF69B4, #87CEEB);
+            border-radius: 10px;
+            animation: loading 2s ease-in-out forwards;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .ice-cream-scoop {
+                width: 90px;
+                height: 90px;
+            }
+
+            .ice-cream-cone {
+                border-left: 45px solid transparent;
+                border-right: 45px solid transparent;
+                border-top: 120px solid #E6BC87;
+            }
+
+            .countdown {
+                gap: 15px;
+            }
+
+            .countdown-item {
+                padding: 20px 15px;
+                min-width: 90px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <!-- Floating ice creams -->
+    <div class="ice-cream-float" style="left: 10%; top: 15%; animation-delay: 0s;">🍦</div>
+    <div class="ice-cream-float" style="right: 15%; top: 20%; animation-delay: 0.5s;">🍨</div>
+    <div class="ice-cream-float" style="left: 20%; bottom: 25%; animation-delay: 1s;">🍧</div>
+    <div class="ice-cream-float" style="right: 10%; bottom: 15%; animation-delay: 1.5s;">🍦</div>
+    <div class="ice-cream-float" style="left: 50%; top: 10%; animation-delay: 2s;">🍨</div>
+
+    <div class="container">
+        <!-- Main ice cream -->
+        <div class="main-ice-cream" id="mainIceCream">
+            <div class="ice-cream-scoop scoop-pink">
+                <div class="scoop-shine"></div>
+            </div>
+            <div class="ice-cream-scoop scoop-blue">
+                <div class="scoop-shine"></div>
+            </div>
+            <div class="ice-cream-scoop scoop-mint">
+                <div class="scoop-shine"></div>
+            </div>
+            <div class="ice-cream-cone">
+                <div class="cone-pattern" style="left: -60px; transform: rotate(-50deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: -45px; transform: rotate(-35deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: -30px; transform: rotate(-20deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: -15px; transform: rotate(-10deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: 0px;"></div>
+                <div class="cone-pattern" style="left: 15px; transform: rotate(10deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: 30px; transform: rotate(20deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: 45px; transform: rotate(35deg); transform-origin: bottom;"></div>
+                <div class="cone-pattern" style="left: 60px; transform: rotate(50deg); transform-origin: bottom;"></div>
+            </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-container" id="countdownContainer">
+            <div class="countdown-title">2026...</div>
+            
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Gün</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Saat</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Dakika</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Saniye</div>
+                </div>
+            </div>
+
+            <div class="message">✨ Dondurmaaaa icinnn</div>
+        </div>
+
+        <!-- Loading screen -->
+        <div class="loading" id="loading">
+            <div class="loading-text">🎊 2026 Yükleniye! 🎊</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hedef tarih: 1 Ocak 2026, 00:00:00
+        const targetDate = new Date('2026-01-01T00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                // Geri sayım bitti, yönlendir
+                document.getElementById('countdownContainer').style.display = 'none';
+                document.getElementById('loading').classList.add('active');
+                
+                setTimeout(() => {
+                    window.location.href = 'galeri.html';
+                }, 2000);
+                return;
+            }
+
+            // Zaman hesaplamaları
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Ekrana yazdır
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Her saniye güncelle
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Test için: Sayfa yüklendiğinde 5 saniye sonra otomatik yönlendir (kaldırabilirsin)
+        // setTimeout(() => {
+        //     document.getElementById('countdownContainer').style.display = 'none';
+        //     document.getElementById('loading').classList.add('active');
+        //     setTimeout(() => {
+        //         window.location.href = 'galeri.html';
+        //     }, 2000);
+        // }, 5000);
+    </script>
+</body>
+</html>

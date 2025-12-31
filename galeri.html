@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Yılın Kutlu Olsun 🍦</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Ice cream decorations */
+        .ice-cream-bg {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        /* Gallery card */
+        .gallery-card {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 30px 80px rgba(30, 60, 114, 0.4);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gallery-card.transitioning {
+            transform: scale(0.9) rotateY(10deg);
+            opacity: 0;
+        }
+
+        /* Ice cream decoration on card */
+        .card-ice-cream {
+            position: absolute;
+            top: -60px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .ice-cream-scoop {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset -3px -3px 10px rgba(0,0,0,0.1);
+        }
+
+        .scoop-pink {
+            background: linear-gradient(135deg, #FFB5E8 0%, #FF9CEE 100%);
+            z-index: 3;
+        }
+
+        .scoop-blue {
+            background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%);
+            margin-top: -20px;
+            z-index: 2;
+        }
+
+        .scoop-mint {
+            background: linear-gradient(135deg, #98FF98 0%, #90EE90 100%);
+            margin-top: -20px;
+            z-index: 1;
+        }
+
+        .scoop-shine {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            top: 15px;
+            left: 20px;
+            filter: blur(2px);
+        }
+
+        .ice-cream-cone {
+            width: 0;
+            height: 0;
+            border-left: 35px solid transparent;
+            border-right: 35px solid transparent;
+            border-top: 90px solid #E6BC87;
+            margin-top: -15px;
+            position: relative;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+        }
+
+        .cone-pattern {
+            position: absolute;
+            width: 1px;
+            height: 90px;
+            background: #C8975F;
+            left: -35px;
+            top: -90px;
+            opacity: 0.3;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #e8eef7;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3c72, #2a5298, #5b7eb8);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        /* Year badge */
+        .year-badge {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .year-badge span {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Photo frame */
+        .photo-frame {
+            width: 100%;
+            height: 320px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+            position: relative;
+            background: linear-gradient(135deg, #e8eef7, #d4dce9);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(30, 60, 114, 0.9), transparent);
+            padding: 40px 20px 20px;
+            color: white;
+        }
+
+        .photo-description {
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Title */
+        .photo-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Counter */
+        .counter {
+            text-align: center;
+            color: #5b7eb8;
+            margin-bottom: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Next button */
+        .next-button {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #5b7eb8 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(30, 60, 114, 0.4);
+            transition: all 0.3s ease;
+            font-family: 'Fredoka', cursive;
+        }
+
+        .next-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(30, 60, 114, 0.5);
+        }
+
+        .next-button:active {
+            transform: translateY(0);
+        }
+
+        /* Final message screen */
+        .final-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 40%, #5b7eb8 70%, #87CEEB 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .final-screen.active {
+            display: flex;
+        }
+
+        /* Fireworks */
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: explode 2s ease-out infinite;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Ice cream explosion */
+        .ice-cream-particle {
+            position: absolute;
+            font-size: 30px;
+            animation: iceCreamExplode 2s ease-out infinite;
+        }
+
+        @keyframes iceCreamExplode {
+            0% {
+                transform: translate(0, 0) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Message styling */
+        .message-container {
+            text-align: center;
+            z-index: 10;
+            animation: messageAppear 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes messageAppear {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .year-2026 {
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF69B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+            100% { filter: drop-shadow(0 0 40px rgba(255, 105, 180, 0.8)); }
+        }
+
+        .message-text {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: white;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            animation: slideUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .message-main {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF1493, #FF69B4, #FFB5E8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 20px;
+            animation: slideUp 1s ease-out 0.6s backwards, wiggle 1s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+        }
+
+        .emoji-container {
+            margin-top: 40px;
+            font-size: clamp(3rem, 8vw, 5rem);
+            animation: fadeIn 1s ease-out 1s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-card {
+                padding: 30px 20px;
+            }
+            
+            .photo-frame {
+                height: 250px;
+            }
+            
+            .card-ice-cream {
+                top: -50px;
+                right: 20px;
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background ice creams -->
+    <div class="ice-cream-bg" style="left: 10%; top: 15%; animation-delay: 0s;">🍦</div>
+    <div class="ice-cream-bg" style="right: 15%; top: 20%; animation-delay: 0.5s;">🍨</div>
+    <div class="ice-cream-bg" style="left: 20%; bottom: 25%; animation-delay: 1s;">🍧</div>
+    <div class="ice-cream-bg" style="right: 10%; bottom: 15%; animation-delay: 1.5s;">🍦</div>
+    <div class="ice-cream-bg" style="left: 50%; top: 10%; animation-delay: 2s;">🍨</div>
+
+    <!-- Gallery Container -->
+    <div class="container" id="galleryContainer">
+        <div class="gallery-card" id="galleryCard">
+            <div class="card-ice-cream">
+                <div class="ice-cream-scoop scoop-pink">
+                    <div class="scoop-shine"></div>
+                </div>
+                <div class="ice-cream-scoop scoop-blue">
+                    <div class="scoop-shine"></div>
+                </div>
+                <div class="ice-cream-scoop scoop-mint">
+                    <div class="scoop-shine"></div>
+                </div>
+                <div class="ice-cream-cone">
+                    <div class="cone-pattern" style="left: -35px;"></div>
+                    <div class="cone-pattern" style="left: -25px;"></div>
+                    <div class="cone-pattern" style="left: -15px;"></div>
+                    <div class="cone-pattern" style="left: -5px;"></div>
+                    <div class="cone-pattern" style="left: 5px;"></div>
+                    <div class="cone-pattern" style="left: 15px;"></div>
+                    <div class="cone-pattern" style="left: 25px;"></div>
+                    <div class="cone-pattern" style="left: 35px;"></div>
+                </div>
+            </div>
+            
+            <!-- Progress bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Year badge -->
+            <div class="year-badge">
+                <span>2025</span>
+            </div>
+
+            <!-- Photo frame -->
+            <div class="photo-frame">
+                <img id="photoImg" src="x1.jpeg" alt="Anı">
+                <div class="photo-overlay">
+                    <div class="photo-description" id="photoDescription">Harikka çizimlerrrs</div>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h2 class="photo-title" id="photoTitle">2025'te Birlikte</h2>
+
+            <!-- Counter -->
+            <div class="counter" id="counter">1 / 5</div>
+
+            <!-- Next button -->
+            <button class="next-button" id="nextButton" onclick="nextPhoto()">
+                İleri →
+            </button>
+        </div>
+    </div>
+
+    <!-- Final Screen -->
+    <div class="final-screen" id="finalScreen">
+        <div id="fireworksContainer"></div>
+        <div class="message-container">
+            <div class="year-2026">2026</div>
+            <div class="message-text">Yeni Yılın Kutlu Olsunnnn</div>
+            <div class="message-main">Karpuzlu Dondurmaaaa 💕</div>
+            <div class="emoji-container">🍦🎊</div>
+            <a href="https://open.spotify.com/intl-tr/track/0q6LuUqGLUiCPP1cbdwFs3?si=ffc19110e0244def" style="margin-top: 60px; color: white; font-size: 1.1rem; text-decoration: none; padding: 12px 30px; border: 2px solid white; border-radius: 25px; transition: all 0.3s ease;" onmouseover="this.style.background='white'; this.style.color='#1e3c72';" onmouseout="this.style.background='transparent'; this.style.color='white';">
+                dinle...
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        
+        const memories = [
+            {
+                title: "2025'te ilk bulusma",
+                description: "Harikka çizimlerrrs",
+                image: "x1.jpeg"
+            },
+            {
+                title: "Tatlı Anılar",
+                description: "KOYUNUM(kuzu) VAR ARTK (AKPLİ DEĞİL)",
+                image: "x3.jpeg"
+            },
+            {
+                title: "ZOR DÖNEMLER (Lanet panda)",
+                description: "Seninle her gün özell (o boktan kafe dahil)",
+                image: "x4.jpeg"
+            },
+            {
+                title: "Güzel Hatıralar (HER SANİYE BEN SENDEN HIZLI YAPTM DİYECEK)",
+                description: "GURUR TABLOSU",
+                image: "x2.jpeg"
+            },
+           
+        ];
+
+        function updateGallery() {
+            const memory = memories[currentIndex];
+            document.getElementById('photoImg').src = memory.image;
+            document.getElementById('photoTitle').textContent = memory.title;
+            document.getElementById('photoDescription').textContent = memory.description;
+            document.getElementById('counter').textContent = `${currentIndex + 1} / ${memories.length}`;
+            document.getElementById('progressBar').style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
+            
+            if (currentIndex === memories.length - 1) {
+                document.getElementById('nextButton').textContent = "2026 baslasıns";
+            }
+        }
+
+        function nextPhoto() {
+            const card = document.getElementById('galleryCard');
+            
+            if (currentIndex < memories.length - 1) {
+                card.classList.add('transitioning');
+                
+                setTimeout(() => {
+                    currentIndex++;
+                    updateGallery();
+                    card.classList.remove('transitioning');
+                }, 400);
+            } else {
+                // Go to 2026
+                card.classList.add('transitioning');
+                
+                setTimeout(() => {
+                    document.getElementById('galleryContainer').style.display = 'none';
+                    showFinalScreen();
+                }, 400);
+            }
+        }
+
+        function showFinalScreen() {
+            const finalScreen = document.getElementById('finalScreen');
+            finalScreen.classList.add('active');
+            
+            // Create fireworks
+            createFireworks();
+            
+            // Create ice cream particles
+            createIceCreamParticles();
+        }
+
+        function createFireworks() {
+            const container = document.getElementById('fireworksContainer');
+            const colors = ['#FFD700', '#FF69B4', '#00CED1', '#FF6347', '#9370DB', '#FFB5E8'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.left = '50%';
+                    firework.style.top = '50%';
+                    
+                    const angle = (Math.random() * 360) * Math.PI / 180;
+                    const distance = Math.random() * 300 + 100;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    
+                    firework.style.setProperty('--tx', `${tx}px`);
+                    firework.style.setProperty('--ty', `${ty}px`);
+                    firework.style.transform = `translate(var(--tx), var(--ty)) scale(1)`;
+                    firework.style.animationDelay = `${(i % 10) * 0.1}s`;
+                    
+                    container.appendChild(firework);
+                }, i * 100);
+            }
+        }
+
+        function createIceCreamParticles() {
+            const container = document.getElementById('fireworksContainer');
+            const emojis = ['🍦', '🍨', '🍧', '💕', '⭐', '✨'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'ice-cream-particle';
+                    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    particle.style.left = '50%';
+                    particle.style.top = '50%';
+                    
+                    const angle = (Math.random() * 360) * Math.PI / 180;
+                    const distance = Math.random() * 400 + 150;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    const rotation = Math.random() * 720 - 360;
+                    
+                    particle.style.transform = `translate(${tx}px, ${ty}px) scale(1.5) rotate(${rotation}deg)`;
+                    particle.style.animationDelay = `${(i % 5) * 0.2}s`;
+                    
+                    container.appendChild(particle);
+                }, i * 150);
+            }
+        }
+
+        // Initialize
+        updateGallery();
+    </script>
+</body>
+</html>
