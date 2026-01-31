@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sana Özel ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #6B46C1;
+            overflow: hidden;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        /* YÜKLENME EKRANI */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #6B46C1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-heart {
+            width: 100px;
+            height: 100px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* ANA EKRAN */
+        .main-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        .message-container {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .love-message {
+            color: white;
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            animation: fadeInScale 1.5s ease-out;
+        }
+
+        .spotify-link {
+            display: inline-block;
+            background: #1DB954;
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+            animation: fadeInScale 1.5s ease-out 0.5s backwards;
+        }
+
+        .spotify-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            background: #1ed760;
+        }
+
+        .spotify-link::before {
+            content: "🎵 ";
+        }
+
+        /* SVG KALPLER */
+        .hearts-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .vector-heart {
+            fill: rgba(255, 107, 129, 0.6);
+            animation: floatHeart 4s ease-in-out infinite;
+        }
+
+        .vector-heart:nth-child(2) { animation-delay: 0.5s; }
+        .vector-heart:nth-child(3) { animation-delay: 1s; }
+        .vector-heart:nth-child(4) { animation-delay: 1.5s; }
+        .vector-heart:nth-child(5) { animation-delay: 2s; }
+        .vector-heart:nth-child(6) { animation-delay: 2.5s; }
+        .vector-heart:nth-child(7) { animation-delay: 3s; }
+        .vector-heart:nth-child(8) { animation-delay: 3.5s; }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* TIKLAMA EFEKTLERİ */
+        .click-heart {
+            position: absolute;
+            color: #ff1744;
+            font-size: 2rem;
+            animation: float 3s ease-out forwards;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-100px) rotate(180deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-300px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- YÜKLENME EKRANI -->
+    <div class="loading-screen" id="loadingScreen">
+        <svg class="loading-heart" viewBox="0 0 100 100">
+            <path d="M50,85 C25,65 10,50 10,35 C10,20 20,10 30,10 C40,10 45,15 50,25 C55,15 60,10 70,10 C80,10 90,20 90,35 C90,50 75,65 50,85 Z" 
+                  fill="#FF6B81" 
+                  stroke="white" 
+                  stroke-width="2"/>
+        </svg>
+        <p class="loading-text">Sana özel bir şarkı yükleniyor</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- ANA EKRAN -->
+    <div class="main-content" id="mainContent">
+        <!-- SVG VECTOR KALPLER -->
+        <svg class="hearts-svg" viewBox="0 0 1000 800">
+            <!-- Üst kalpler -->
+            <path class="vector-heart" d="M200,150 C175,130 160,115 160,100 C160,85 170,75 180,75 C190,75 195,80 200,90 C205,80 210,75 220,75 C230,75 240,85 240,100 C240,115 225,130 200,150 Z" />
+            <path class="vector-heart" d="M800,150 C775,130 760,115 760,100 C760,85 770,75 780,75 C790,75 795,80 800,90 C805,80 810,75 820,75 C830,75 840,85 840,100 C840,115 825,130 800,150 Z" />
+            
+            <!-- Yan kalpler -->
+            <path class="vector-heart" d="M150,400 C125,380 110,365 110,350 C110,335 120,325 130,325 C140,325 145,330 150,340 C155,330 160,325 170,325 C180,325 190,335 190,350 C190,365 175,380 150,400 Z" />
+            <path class="vector-heart" d="M850,400 C825,380 810,365 810,350 C810,335 820,325 830,325 C840,325 845,330 850,340 C855,330 860,325 870,325 C880,325 890,335 890,350 C890,365 875,380 850,400 Z" />
+            
+            <!-- Alt kalpler -->
+            <path class="vector-heart" d="M250,650 C225,630 210,615 210,600 C210,585 220,575 230,575 C240,575 245,580 250,590 C255,580 260,575 270,575 C280,575 290,585 290,600 C290,615 275,630 250,650 Z" />
+            <path class="vector-heart" d="M750,650 C725,630 710,615 710,600 C710,585 720,575 730,575 C740,575 745,580 750,590 C755,580 760,575 770,575 C780,575 790,585 790,600 C790,615 775,630 750,650 Z" />
+            
+            <!-- Orta kalpler -->
+            <path class="vector-heart" d="M350,250 C325,230 310,215 310,200 C310,185 320,175 330,175 C340,175 345,180 350,190 C355,180 360,175 370,175 C380,175 390,185 390,200 C390,215 375,230 350,250 Z" />
+            <path class="vector-heart" d="M650,550 C625,530 610,515 610,500 C610,485 620,475 630,475 C640,475 645,480 650,490 C655,480 660,475 670,475 C680,475 690,485 690,500 C690,515 675,530 650,550 Z" />
+        </svg>
+
+        <div class="message-container">
+            <h1 class="love-message">
+                1. Ayımız Kutlu Olsun Sevgilim<br>
+                Seni Seviyorum ❤️
+            </h1>
+            <a href="https://open.spotify.com/intl-tr/track/65vdMBskhx3akkG9vQlSH1?si=e9f787e06fc443d8" target="_blank" class="spotify-link">
+                Bizim Şarkımızı Dinle
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 30 saniye yüklenme animasyonu
+        let progress = 0;
+        const progressFill = document.getElementById('progressFill');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const mainContent = document.getElementById('mainContent');
+        
+        const loadingInterval = setInterval(() => {
+            progress += 100 / 30; // 30 saniyede 100%
+            
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+                
+                // Yüklenme tamamlandı, ana ekranı göster
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    mainContent.classList.add('visible');
+                }, 500);
+            }
+            
+            progressFill.style.width = progress + '%';
+        }, 1000); // Her saniye güncelle
+
+        // Tıklama efekti
+        document.addEventListener('click', (e) => {
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘', '💞'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'click-heart';
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    
+                    const offsetX = (Math.random() - 0.5) * 100;
+                    const offsetY = (Math.random() - 0.5) * 100;
+                    
+                    heart.style.left = (e.clientX + offsetX) + 'px';
+                    heart.style.top = (e.clientY + offsetY) + 'px';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        });
+    </script>
+</body>
+</html>
