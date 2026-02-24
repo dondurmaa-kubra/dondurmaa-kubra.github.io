@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAÜ Nizip Kampüs Servisi</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181b22;
+    --border: rgba(255,255,255,0.07);
+    --accent: #f5c518;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --green: #22c55e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,197,24,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,197,24,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header { padding: 48px 0 32px; text-align: center; }
+
+  .logo-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245,197,24,0.1);
+    border: 1px solid rgba(245,197,24,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeDown 0.6s ease both;
+  }
+  .logo-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    animation: fadeDown 0.6s 0.1s ease both;
+  }
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--muted);
+    margin-top: 12px;
+    font-size: 15px;
+    animation: fadeDown 0.6s 0.2s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .route-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 28px 0;
+    animation: fadeDown 0.6s 0.3s ease both;
+    flex-wrap: wrap;
+  }
+  .route-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 20px;
+  }
+  .route-node strong { display: block; font-family: 'Syne', sans-serif; font-size: 15px; }
+  .route-node span { color: var(--muted); font-size: 11px; }
+  .route-arrow { color: var(--accent); font-size: 20px; }
+
+  .tab-switcher {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4px;
+    margin: 0 auto 32px;
+    max-width: 340px;
+    animation: fadeDown 0.6s 0.4s ease both;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .tab-btn.active { background: var(--accent); color: #000; }
+  .tab-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+  .tab-btn.active .dot { opacity: 1; }
+
+  .time-display { text-align: center; margin-bottom: 28px; animation: fadeDown 0.6s 0.5s ease both; }
+  .current-time { font-size: 13px; color: var(--muted); }
+  .current-time strong { color: var(--text); font-size: 15px; }
+
+  .next-bus-card {
+    background: linear-gradient(135deg, rgba(245,197,24,0.12), rgba(255,107,53,0.06));
+    border: 1px solid rgba(245,197,24,0.25);
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    animation: fadeDown 0.6s 0.55s ease both;
+    flex-wrap: wrap;
+  }
+  .next-bus-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+  .next-bus-card .time { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; line-height: 1; }
+  .next-bus-card .countdown { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .next-bus-card .countdown strong { color: var(--green); }
+
+  .countdown-badge {
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 12px;
+    padding: 8px 16px;
+    text-align: center;
+    min-width: 80px;
+  }
+  .countdown-badge .minutes { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--green); line-height: 1; }
+  .countdown-badge .min-label { font-size: 11px; color: var(--muted); }
+
+  .schedule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; animation: fadeDown 0.6s 0.6s ease both; }
+  @media (max-width: 480px) { .schedule-grid { grid-template-columns: 1fr; } }
+
+  .col-header {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .col-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .col-icon.from { background: rgba(245,197,24,0.15); }
+  .col-icon.to   { background: rgba(255,107,53,0.15); }
+
+  .time-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    transition: background 0.2s, transform 0.2s;
+    background: var(--surface);
+    border: 1px solid transparent;
+  }
+  .time-item:hover { background: var(--surface2); border-color: var(--border); transform: translateX(2px); }
+  .time-item.next { background: rgba(245,197,24,0.1); border-color: rgba(245,197,24,0.3); }
+  .time-item.passed { opacity: 0.35; }
+  .time-item .t { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: 0.02em; }
+  .time-item .badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; background: rgba(245,197,24,0.2); color: var(--accent); }
+  .time-item .arrive { font-size: 11px; color: var(--muted); }
+
+  .times-scroll { max-height: 480px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+  .times-scroll::-webkit-scrollbar { width: 4px; }
+  .times-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .info-banner { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 18px; font-size: 13px; color: var(--muted); margin-bottom: 20px; text-align: center; }
+  .info-banner strong { color: var(--text); }
+
+  footer { text-align: center; padding: 40px 0 32px; color: var(--muted); font-size: 12px; animation: fadeDown 0.6s 0.7s ease both; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo-pill">Canlı Güncelleme</div>
+    <h1>GAÜ Nizip<br><span>Kampüs Servisi</span></h1>
+    <p class="subtitle">Güncel otobüs hareket saatleri</p>
+  </header>
+
+  <div class="route-bar" id="routeBar"></div>
+
+  <div class="tab-switcher">
+    <button class="tab-btn active" onclick="switchTab('hafta-ici', this)">
+      <span class="dot"></span> Hafta İçi
+    </button>
+    <button class="tab-btn" onclick="switchTab('hafta-sonu', this)">
+      <span class="dot"></span> Hafta Sonu
+    </button>
+  </div>
+
+  <div class="time-display">
+    <div class="current-time" id="clockDisplay">...</div>
+  </div>
+
+  <div class="next-bus-card">
+    <div>
+      <div class="label">⏱ Sonraki Sefer</div>
+      <div class="time" id="nextBusTime">--:--</div>
+      <div class="countdown" id="nextBusCountdown">Hesaplanıyor...</div>
+    </div>
+    <div class="countdown-badge">
+      <div class="minutes" id="countdownMins">--</div>
+      <div class="min-label">dakika</div>
+    </div>
+  </div>
+
+  <div class="tab-content active" id="hafta-ici">
+    <div class="info-banner" id="wdBanner"></div>
+    <div class="schedule-grid">
+      <div>
+        <div class="col-header"><div class="col-icon from">🏠</div><span id="fromLabel1"></span></div>
+        <div class="times-scroll" id="wdFrom"></div>
+      </div>
+      <div>
+        <div class="col-header"><div class="col-icon to">🎓</div><span id="toLabel1"></span></div>
+        <div class="times-scroll" id="wdTo"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="hafta-sonu">
+    <div class="info-banner" id="weBanner"></div>
+    <div class="schedule-grid">
+      <div>
+        <div class="col-header"><div class="col-icon from">🏠</div><span id="fromLabel2"></span></div>
+        <div class="times-scroll" id="weFrom"></div>
+      </div>
+      <div>
+        <div class="col-header"><div class="col-icon to">🎓</div><span id="toLabel2"></span></div>
+        <div class="times-scroll" id="weTo"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footerText"></footer>
+</div>
+
+<script>
+/* ============================================================
+   📋 VERİ BURADAN DEĞİŞTİRİLİR
+   ============================================================
+   Sadece bu bloğu düzenle, geri kalanına dokunma.
+
+   - from : kalkış saatleri (Nizip Erkek Yurdu)
+   - to   : varış saatleri (GAÜ Nizip Yerleşkesi)
+   - null : o satırda karşılık gelen saat yok
+   ============================================================ */
+
+const DATA = {
+  route: {
+    from: "Nizip Erkek Yurdu",
+    to:   "GAÜ Nizip Yerleşkesi"
+  },
+  weekday: {
+    label: "Pazartesi – Cuma",
+    from: ["07:30","07:45","08:15","09:05","09:45","10:25","11:05","11:45","12:25","13:05","13:45","14:25","15:05","15:45","16:25","17:05","17:45","18:25","19:05","20:25","21:45"],
+    to:   ["08:25","09:05","09:45","10:25","11:05","11:45","12:25","13:05","13:45","14:25","15:05","15:45","16:25","17:05","17:45","18:25","19:05","19:45","21:05","22:25", null]
+  },
+  weekend: {
+    label: "Cumartesi – Pazar",
+    from: ["08:15","09:45","11:05","12:25","13:45","15:05","16:25","17:45","19:05","20:25","21:45"],
+    to:   ["09:05","10:25","11:45","13:05","14:25","15:45","17:05","18:25","19:45","21:05","22:25"]
+  }
+};
+
+/* ============================================================
+   ⚙️ UYGULAMA KODU — değiştirme
+   ============================================================ */
+
+const toMins = t => { if (!t) return null; const [h,m] = t.split(':').map(Number); return h*60+m; };
+const getNow = () => { const n = new Date(); return n.getHours()*60+n.getMinutes(); };
+const isWeekend = () => [0,6].includes(new Date().getDay());
+
+function init() {
+  // Route bar
+  document.getElementById('routeBar').innerHTML = `
+    <div class="route-node">
+      <strong>${DATA.route.from}</strong><span>Kalkış noktası</span>
+    </div>
+    <div class="route-arrow">→</div>
+    <div class="route-node">
+      <strong>${DATA.route.to}</strong><span>Varış noktası</span>
+    </div>`;
+
+  document.getElementById('fromLabel1').textContent = DATA.route.from;
+  document.getElementById('fromLabel2').textContent = DATA.route.from;
+  document.getElementById('toLabel1').textContent   = DATA.route.to;
+  document.getElementById('toLabel2').textContent   = DATA.route.to;
+
+  document.getElementById('wdBanner').innerHTML =
+    `${DATA.weekday.label} · <strong>${DATA.weekday.from.filter(Boolean).length} sefer</strong>`;
+  document.getElementById('weBanner').innerHTML =
+    `${DATA.weekend.label} · <strong>${DATA.weekend.from.filter(Boolean).length} sefer</strong>`;
+
+  document.getElementById('footerText').textContent =
+    `${DATA.route.from} ↔ ${DATA.route.to} · Bilgiler değişebilir`;
+
+  renderAll();
+  updateClock();
+  setInterval(renderAll, 30000);
+  setInterval(updateClock, 1000);
+}
+
+function renderTimes(containerId, times) {
+  const el = document.getElementById(containerId);
+  const nowMins = getNow();
+  el.innerHTML = '';
+  const nextIdx = times.findIndex(t => t && toMins(t) >= nowMins);
+
+  times.forEach((t, i) => {
+    if (!t) return;
+    const mins = toMins(t);
+    const passed = mins < nowMins;
+    const isNext = i === nextIdx;
+
+    const div = document.createElement('div');
+    div.className = 'time-item' + (isNext ? ' next' : '') + (passed ? ' passed' : '');
+
+    let badge = '';
+    if (isNext) {
+      badge = `<span class="badge">Sonraki</span>`;
+    } else if (!passed) {
+      const diff = mins - nowMins;
+      if (diff < 60) badge = `<span class="arrive">${diff}dk</span>`;
+    }
+
+    div.innerHTML = `<span class="t">${t}</span>${badge}`;
+    el.appendChild(div);
+  });
+}
+
+function updateNextBus() {
+  const nowMins = getNow();
+  const fromList = isWeekend() ? DATA.weekend.from : DATA.weekday.from;
+  const next = fromList.find(t => t && toMins(t) >= nowMins);
+
+  if (next) {
+    const diff = toMins(next) - nowMins;
+    document.getElementById('nextBusTime').textContent = next;
+    document.getElementById('countdownMins').textContent = diff;
+    document.getElementById('nextBusCountdown').innerHTML =
+      diff === 0 ? '🚌 Otobüs şu an hareket ediyor!'
+                 : `<strong>${diff}</strong> dakika sonra kalkıyor`;
+  } else {
+    document.getElementById('nextBusTime').textContent = '--:--';
+    document.getElementById('countdownMins').textContent = '—';
+    document.getElementById('nextBusCountdown').textContent = 'Bugün başka sefer yok';
+  }
+}
+
+function updateClock() {
+  const now = new Date();
+  const days = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+  const p = n => String(n).padStart(2,'0');
+  document.getElementById('clockDisplay').innerHTML =
+    `${days[now.getDay()]} · <strong>${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}</strong>`;
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function renderAll() {
+  renderTimes('wdFrom', DATA.weekday.from);
+  renderTimes('wdTo',   DATA.weekday.to);
+  renderTimes('weFrom', DATA.weekend.from);
+  renderTimes('weTo',   DATA.weekend.to);
+  updateNextBus();
+}
+
+init();
+</script>
+</body>
+</html>
