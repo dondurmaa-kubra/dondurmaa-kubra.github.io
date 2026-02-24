@@ -1,7 +1,7 @@
 {
   "route": {
-    "from": "Nizip Erkek Yurdundan Üniversiteye",
-    "to": "GAÜ Nizip Yerleşkesinden Merkeze"
+    "from": "Nizip Erkek Yurdu",
+    "to": "GAÜ Nizip Yerleşkesi"
   },
   "weekday": {
     "label": "Pazartesi – Cuma",
